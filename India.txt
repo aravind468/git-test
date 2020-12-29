@@ -1,0 +1,53 @@
+What is the difference between & and &&?
+Both & and && is used in a query in order to substitute variables.
+“&” is used to create a temporary substitution variable that will prompt you for a value every time it is referenced.
+ Example:
+SQL> select * from test where b=’&Country_name’;
+Enter value for country_name: USA
+old 1: select * from test where b=’&Country_name’
+new 1: select * from test where b=’USA’
+A B
+———- ———-
+1 USA
+SQL> /
+Enter value for country_name: INDIA
+old 1: select * from test where b=’&Country_name’
+new 1: select * from test where b=’INDIA’
+A B
+———- ———-
+2 INDIA
+“&&” is used to create a permanent substitution variable. Once you have entered a value (defined the variable) its value will used every time the variable is referenced. Example:
+SQL> select * from test where b=’&&Country_name’;
+Enter value for country_name: INDIA
+old 1: select * from test where b=’&&Country_name’
+new 1: select * from test where b=’INDIA’
+A B
+———- ———-
+2 INDIA
+SQL> select * from test where b=’&&Country_name’;
+old 1: select * from test where b=’&&Country_name’
+new 1: select * from test where b=’INDIA’
+A B
+———- ———-
+2 INDIA
+SQL> /
+old 1: select * from test where b=’&&Country_name’
+new 1: select * from test where b=’INDIA’
+A B
+———- ———-
+2 INDIA
+As we see subsequent run does not prompt for to provide country name if you use && and once we provide value.
+The “&&” will actually define the variable similarly to what the DEFINE command does.
+If we now invoke define command it will return output as,
+SQL> define
+DEFINE COUNTRY_NAME = “INDIA” (CHAR)
+In stead of && we can also use DEFINE to define a variable like,
+SQL> DEFINE COUNTRY_NAME = “USA”
+SQL> select * from test where b=’&&Country_name’
+2 ;
+old 1: select * from test where b=’&&Country_name’
+new 1: select * from test where b=’USA’
+A B
+———- ———-
+1 USA
+
