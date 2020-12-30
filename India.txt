@@ -1,7 +1,8 @@
 What is the difference between & and &&?
 Both & and && is used in a query in order to substitute variables.
 “&” is used to create a temporary substitution variable that will prompt you for a value every time it is referenced.
- Example:
+
+Example:
 SQL> select * from test where b=’&Country_name’;
 Enter value for country_name: USA
 old 1: select * from test where b=’&Country_name’
